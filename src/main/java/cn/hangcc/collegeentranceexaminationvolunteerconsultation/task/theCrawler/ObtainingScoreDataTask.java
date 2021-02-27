@@ -49,10 +49,20 @@ public class ObtainingScoreDataTask {
     private ObtainingScoreDataService obtainingScoreDataService;
 
     /**
-     * 定时任务 每天8点刷取西安科技大学的录取数据并落库
+     * 定时任务 每天8点刷取录取数据并落库
      */
     @PostConstruct
     @Scheduled(cron = "0 0 8 * * ?")
+    public void refreshObtainingScoreData() throws IOException {
+        // 清空库 每天重新刷取
+        obtainingScoreDataService.truncateTable();
+        // 刷取西安科技大学录取数据
+        obtainingXustScoreData();
+    }
+
+    /**
+     * 刷取西安科技大学的录取数据并落库
+     */
     public void obtainingXustScoreData() throws IOException {
         try {
             CloseableHttpClient client = HttpClientBuilder.create().build();
