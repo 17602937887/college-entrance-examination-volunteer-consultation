@@ -251,6 +251,6 @@
 
 
     <update id="truncateTable">
-        truncate table ${tableName}
+        truncate table college_entrance_examination_volunteer_consultation.obtaining_score_data
     </update>
 </mapper>
