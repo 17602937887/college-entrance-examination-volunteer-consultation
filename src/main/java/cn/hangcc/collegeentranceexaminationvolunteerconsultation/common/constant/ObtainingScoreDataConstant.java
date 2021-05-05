@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 maoyan.com
+ * Copyright (c) 2021 hangcc.cn
  * All rights reserved.
  *
  */
@@ -21,4 +21,9 @@ public class ObtainingScoreDataConstant {
      * 西安科技大学录取数据请求地址
      */
     public static final String XUST_DATA_SOURCE_URL = "https://zs.xust.edu.cn/fsxrk.jsp?urltype=tree.TreeTempUrl&wbtreeid=1043&nianfen=%s&kelei=%s&shengfen=%s";
+
+    /**
+     * 西安科技大学名称
+     */
+    public static final String XUST_SCHOOL_NAME = "西安科技大学";
 }

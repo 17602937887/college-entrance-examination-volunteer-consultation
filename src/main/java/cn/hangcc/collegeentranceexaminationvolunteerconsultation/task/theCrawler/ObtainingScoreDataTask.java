@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 maoyan.com
+ * Copyright (c) 2021 hangcc.cn
  * All rights reserved.
  *
  */
@@ -65,6 +65,7 @@ public class ObtainingScoreDataTask {
      */
     public void obtainingXustScoreData() throws IOException {
         try {
+            log.info("==============开始获取【西安科技大学】录取信息==================");
             CloseableHttpClient client = HttpClientBuilder.create().build();
             String cookie = getCookie(XUST_HOME_PAGE_URL);
             HttpGet request = new HttpGet(XUST_HOME_PAGE_URL);
@@ -87,6 +88,7 @@ public class ObtainingScoreDataTask {
             // 解析省份
             Elements ssmcclick = parse.getElementsByClass("ssmcclick ");
             ssmcclick.forEach(var -> provincesList.add(var.id()));
+            List<ObtainingScoreDataModel> obtainingScoreDataList = new ArrayList<>();
             for (String divisionOfClass : divisionOfClassList) {
                 for (String year : yearList) {
                     for (String provinces : provincesList) {
@@ -97,8 +99,8 @@ public class ObtainingScoreDataTask {
                         Document data = Jsoup.parse(result);
                         Element tbody = data.getElementsByTag("tbody").get(0);
                         Elements tr = tbody.getElementsByTag("tr");
-                        ObtainingScoreDataModel obtainingScoreDataModel = new ObtainingScoreDataModel();
                         for (Element element : tr) {
+                            ObtainingScoreDataModel obtainingScoreDataModel = new ObtainingScoreDataModel();
                             List<String> properties = new ArrayList<>();
                             Elements td = element.getElementsByTag("td");
                             for (Element element1 : td) {
@@ -107,6 +109,7 @@ public class ObtainingScoreDataTask {
                             if (properties.size() != 13) {
                                 continue;
                             }
+                            obtainingScoreDataModel.setSchoolName(XUST_SCHOOL_NAME);
                             obtainingScoreDataModel.setYear(properties.get(0));
                             obtainingScoreDataModel.setProvinces(properties.get(1));
                             obtainingScoreDataModel.setAdmissionCategory(properties.get(2));
@@ -120,12 +123,15 @@ public class ObtainingScoreDataTask {
                             obtainingScoreDataModel.setControlScore(getScore(properties.get(10)));
                             obtainingScoreDataModel.setTheMinimumGap(getScore(properties.get(11)));
                             obtainingScoreDataModel.setDifferenceOfAverage(getScore(properties.get(12)));
-                            obtainingScoreDataService.insert(obtainingScoreDataModel);
+                            obtainingScoreDataList.add(obtainingScoreDataModel);
                         }
+                        log.info(String.format("%s:科目:[%s],年份:[%s],省份:[%s]获取数据完毕", XUST_SCHOOL_NAME, divisionOfClass, year, provinces));
                     }
                 }
             }
+            obtainingScoreDataService.insertBatch(obtainingScoreDataList);
             client.close();
+            log.info("==============【西安科技大学】录取信息获取结束==================");
         } catch (IOException e) {
             log.error("ObtainingScoreDataTask.obtainingXustScoreData | 定时任务获取xust录取数据时发生异常, e=", e);
             throw e;

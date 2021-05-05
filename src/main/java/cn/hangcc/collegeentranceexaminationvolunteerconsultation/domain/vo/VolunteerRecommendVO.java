@@ -1,22 +1,20 @@
-package cn.hangcc.collegeentranceexaminationvolunteerconsultation.domain.model;
+/*
+ * Copyright (c) 2021 hangcc.cn
+ * All rights reserved.
+ *
+ */
+package cn.hangcc.collegeentranceexaminationvolunteerconsultation.domain.vo;
 
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * (ObtainingScoreData)实体类
+ * 在这里编写类的功能描述
  *
  * @author chenhang
- * @since 2021-02-27 13:58:42
+ * @created 2021/5/5
  */
 @Data
-public class ObtainingScoreDataModel implements Serializable {
-    /**
-     * 主键
-     */
-    private Integer id;
+public class VolunteerRecommendVO {
     /**
      * 学校名称
      */
@@ -77,20 +75,4 @@ public class ObtainingScoreDataModel implements Serializable {
      * 平均分差
      */
     private Double differenceOfAverage;
-    /**
-     * 创建时间
-     */
-    private Date created;
-    /**
-     * 更新时间
-     */
-    private Date updated;
-
-    /**
-     * 用以从学校+专业名称维度区分不同的数据
-     * @return schoolName + theNameOfTheProfessional
-     */
-    public String difference() {
-        return schoolName + theNameOfTheProfessional;
-    }
 }

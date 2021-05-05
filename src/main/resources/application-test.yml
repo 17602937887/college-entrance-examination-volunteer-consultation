@@ -4,9 +4,9 @@ server:
 spring:
   # 数据库连接配置
   datasource:
-    url: jdbc:mysql://localhost:3306/college_entrance_examination_volunteer_consultation?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: Chh980929
+    url: jdbc:mysql://39.106.120.32:3306/college_entrance_examination_volunteer_consultation?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: chenhang
+    password: Chh980929...
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 # mybatis的相关配置

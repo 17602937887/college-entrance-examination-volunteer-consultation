@@ -18,6 +18,10 @@ public class ObtainingScoreDataDO implements Serializable {
      */
     private Integer id;
     /**
+     * 学校名称
+     */
+    private String schoolName;
+    /**
      * 年份
      */
     private String year;

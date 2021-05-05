@@ -6,6 +6,8 @@ import cn.hangcc.collegeentranceexaminationvolunteerconsultation.service.Obtaini
 import cn.hangcc.collegeentranceexaminationvolunteerconsultation.service.converter.ObtainingScoreDataModelConverter;
 import org.springframework.stereotype.Service;
 import static cn.hangcc.collegeentranceexaminationvolunteerconsultation.service.converter.ObtainingScoreDataModelConverter.*;
+import static cn.hangcc.collegeentranceexaminationvolunteerconsultation.service.converter.ObtainingScoreDataModelConverter.convertToObtainingScoreDataDO;
+
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +62,11 @@ public class ObtainingScoreDataServiceImpl implements ObtainingScoreDataService 
         return ObtainingScoreDataModel;
     }
 
+    @Override
+    public int insertBatch(List<ObtainingScoreDataModel> obtainingScoreDataModelList) {
+        return obtainingScoreDataDao.insertBatch(convertToObtainingScoreDataDOs(obtainingScoreDataModelList));
+    }
+
     /**
      * 修改数据
      *
@@ -86,5 +93,25 @@ public class ObtainingScoreDataServiceImpl implements ObtainingScoreDataService 
     @Override
     public void truncateTable() {
         obtainingScoreDataDao.truncateTable();
+    }
+
+    @Override
+    public List<ObtainingScoreDataModel> allRecommend(Integer score, Integer offset, Integer limit) {
+        return convertToObtainingScoreDataModels(obtainingScoreDataDao.allRecommend(score, offset, limit));
+    }
+
+    @Override
+    public List<ObtainingScoreDataModel> getRecommendTotalRecord(Integer score) {
+        return convertToObtainingScoreDataModels(obtainingScoreDataDao.getRecommendTotalRecord(score));
+    }
+
+    @Override
+    public List<ObtainingScoreDataModel> pageData(Integer offset, Integer limit) {
+        return convertToObtainingScoreDataModels(obtainingScoreDataDao.pageData(offset, limit));
+    }
+
+    @Override
+    public Integer totalPageData() {
+        return obtainingScoreDataDao.totalPageData().size();
     }
 }
