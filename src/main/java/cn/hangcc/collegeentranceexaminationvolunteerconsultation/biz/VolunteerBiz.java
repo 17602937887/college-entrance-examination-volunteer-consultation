@@ -39,16 +39,8 @@ public class VolunteerBiz {
      */
     public List<ObtainingScoreDataModel> allRecommend(Integer score, Integer offset, Integer limit) {
         try {
-            // 获取符合条件的所有数据集合
-            List<ObtainingScoreDataModel> recommendList = obtainingScoreDataService.allRecommend(score, offset, limit);
-            Map<String, ObtainingScoreDataModel> lowestRecommendList = recommendList.stream().collect(Collectors.toMap(
-                    ObtainingScoreDataModel::difference,
-                    Function.identity(),
-                    (o1, o2) -> {
-                        return o1.getLowestScore() < o2.getLowestScore() ? o1 : o2;
-                    }
-            ));
-            return new ArrayList<>(lowestRecommendList.values());
+            // 获取符合条件的数据集合
+            return obtainingScoreDataService.allRecommend(score, offset, limit);
         } catch (Exception e) {
             log.error("VolunteerBiz.pageData | 推荐志愿Biz获取数据时出现异常, score:{}, e=", score, e);
             throw new RuntimeException(e.getMessage());

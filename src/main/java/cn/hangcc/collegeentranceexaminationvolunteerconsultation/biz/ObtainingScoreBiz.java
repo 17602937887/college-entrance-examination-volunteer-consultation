@@ -29,15 +29,7 @@ public class ObtainingScoreBiz {
     private ObtainingScoreDataService obtainingScoreDataService;
 
     public List<ObtainingScoreDataModel> pageData(Integer offset, Integer limit) {
-        List<ObtainingScoreDataModel> dataList = obtainingScoreDataService.pageData(offset, limit);
-        Map<String, ObtainingScoreDataModel> lowestRecommendList = dataList.stream().collect(Collectors.toMap(
-                ObtainingScoreDataModel::difference,
-                Function.identity(),
-                (o1, o2) -> {
-                    return o1.getLowestScore() < o2.getLowestScore() ? o1 : o2;
-                }
-        ));
-        return new ArrayList<>(lowestRecommendList.values());
+        return obtainingScoreDataService.pageData(offset, limit);
     }
 
     public Integer getTotalData() {

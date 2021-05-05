@@ -51,7 +51,6 @@ public class ObtainingScoreDataTask {
     /**
      * 定时任务 每天8点刷取录取数据并落库
      */
-    @PostConstruct
     @Scheduled(cron = "0 0 8 * * ?")
     public void refreshObtainingScoreData() throws IOException {
         // 清空库 每天重新刷取

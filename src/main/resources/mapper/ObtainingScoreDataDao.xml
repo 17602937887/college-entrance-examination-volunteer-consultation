@@ -123,8 +123,12 @@
     <select id="allRecommend" resultMap="ObtainingScoreDataMap">
         select <include refid="allColumn"/>
         from college_entrance_examination_volunteer_consultation.obtaining_score_data
-        where #{score} >= lowest_score
-        group by school_name, the_name_of_the_professional
+        where (school_name, the_name_of_the_professional, lowest_score) in (
+            select school_name, the_name_of_the_professional, min(lowest_score) as lowest_score
+            from college_entrance_examination_volunteer_consultation.obtaining_score_data
+            where #{score} >= lowest_score
+            group by school_name, the_name_of_the_professional
+        )
         limit #{offset}, #{limit}
     </select>
     <select id="getRecommendTotalRecord" resultMap="ObtainingScoreDataMap">
@@ -134,7 +138,12 @@
     </select>
     <select id="pageData" resultMap="ObtainingScoreDataMap">
         select <include refid="allColumn"/>
-        from obtaining_score_data
+        from college_entrance_examination_volunteer_consultation.obtaining_score_data
+        where (school_name, the_name_of_the_professional, lowest_score) in (
+            select school_name, the_name_of_the_professional, min(lowest_score) as lowest_score
+            from college_entrance_examination_volunteer_consultation.obtaining_score_data
+            group by school_name, the_name_of_the_professional
+        )
         limit #{offset}, #{limit}
     </select>
     <select id="totalPageData" resultType="java.lang.Integer">
