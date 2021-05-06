@@ -29,5 +29,17 @@ create table if not exists obtaining_score_data
     `updated`                      timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     key idx_year_provinces_division_of_class (`year`, `provinces`, `division_of_class`) comment '年份、省份、科类 普通索引',
     key idx_school_name_the_name_of_the_professional (`school_name`, `the_name_of_the_professional`) comment '学校，专业名称 普通索引'
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+# 用户信息表
+create table user_info(
+    id bigint(20) not null primary key auto_increment comment 'ID',
+    `user_name` varchar(255) not null comment '用户名称',
+    `password` varchar(255) not null comment '用户密码,bcrypt加密',
+    `email` varchar(255) comment '用户邮箱',
+    `phone` varchar(255) comment '用户手机号',
+    `identity` int(11) not null comment '用户类型 1:管理员,2:普通用户',
+    `status` int(11) not null default 1 comment '用户状态 1:正常用户,2:注销用户',
+    created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    modified datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户信息表';
